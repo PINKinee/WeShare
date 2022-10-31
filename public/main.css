@@ -1,0 +1,20 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #555;
+    font-family: PingFangSC-Semibold,PingFang SC;
+}
+
+a {
+    color: #555;
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+input,button {
+    outline: none;
+}
