@@ -1,40 +1,54 @@
 <template>
-  <ul class="filesManage">
-    <li class="iconfont icon-wenjian" v-for="(f, index) of files" :key="index">
-      {{ " " + f }}
+  <div class="fileManage">
+    <!-- item.state决定箭头方向-->
+    <li class="iconfont icon-jiantouyou" v-for="item in newFiles" :key="item.id" @click.stop="item.state = !item.state"
+      @mouseover.stop="add($event)" @mouseout.stop="remove($event)">
+      {{ " " + item.name }}
+      <!-- <transition name="fade"> -->
+      <ul v-show="item.state" v-if="item?.children?.length">
+        <filesManage :files="item.children" />
+      </ul>
+      <!-- </transition> -->
     </li>
-  </ul>
+  </div>
 </template>
 
 <script>
+import { ref } from 'vue';
 export default {
   name: "filesManage",
-  setup() {
-    const files = ["文件名1", "文件名2", "文件名3"];
-    return { files };
+  props: {
+    files: Array,
+    depth: Number
+  },
+  setup(props) {
+    let newFiles = ref(props.files);
+    const add = e => e.currentTarget.classList.add('hover');
+    const remove = e => e.currentTarget.classList.remove('hover');
+    return {
+      newFiles,
+      add,
+      remove
+    }
   },
 };
 </script>
 
 <style scoped lang="less">
-ul {
-  position: absolute;
-  left: -20%;
-  top: 0;
-  width: 20%;
-  height: 100%;
-  background-color: #fff;
-  transition: all 0.5s;
+.fileManage {
+  margin-left: 15px;
+
   li {
     width: 100%;
-    height: 60px;
-    line-height: 60px;
     font-size: 20px;
-    padding: 0 20px;
+    min-height: 50px;
+    line-height: 50px;
     cursor: pointer;
-    &:hover {
-      color: #3284cf;
-    }
+    margin: 5px 5px;
   }
+}
+
+.hover {
+  color: #3284cf;
 }
 </style>
