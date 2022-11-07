@@ -1,6 +1,10 @@
 <template>
   <div class="header">
-    <span class="iconfont icon-jiantouyou" title="打开文件夹" @click="changeState($event)"></span>
+    <span
+      class="iconfont icon-jiantouyou"
+      title="打开文件夹"
+      @click="changeState($event)"
+    ></span>
     <input type="text" placeholder="输入文件标题…" />
     <span class="touxiang">
       <ul class="userMeg">
@@ -22,16 +26,16 @@ export default {
     const changeState = (e) => {
       state.value = !state.value;
       const mainEdiPlace = document.querySelector(".mainEdiPlace");
-      const filesArea = document.querySelector(".filesArea");
+      const filesManage = document.querySelector(".filesManage");
       console.log(e.target.class);
       if (state.value) {
         mainEdiPlace.style.left = "16%";
-        filesArea.style.left = "0%";
+        filesManage.style.left = "0%";
         mainEdiPlace.style.width = "84%";
         e.target.className = "iconfont icon-zuojiantou";
       } else {
         mainEdiPlace.style.left = "0%";
-        filesArea.style.left = "-16%";
+        filesManage.style.left = "-16%";
         mainEdiPlace.style.width = "100%";
         e.target.className = "iconfont icon-jiantouyou";
       }
@@ -42,6 +46,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+li {
+  list-style: none;
+}
 .header {
   width: 100%;
   min-width: 1000px;
@@ -49,7 +56,6 @@ export default {
   line-height: 80px;
   background-color: #fff;
   border-bottom: 1px solid #eee;
-
   span {
     float: left;
     width: 80px;
@@ -61,7 +67,6 @@ export default {
     font-size: 30px;
     color: #86909c;
   }
-
   input {
     float: left;
     width: 50%;
@@ -72,7 +77,6 @@ export default {
     color: #86909c;
     background-color: transparent;
   }
-
   button {
     float: right;
     width: 100px;
@@ -85,7 +89,6 @@ export default {
     color: #1d7dfa;
     margin-top: 16px;
   }
-
   .touxiang {
     position: relative;
     float: right;
@@ -95,19 +98,17 @@ export default {
     border: 1px solid #eee;
     margin-top: 10px;
     margin-right: 70px;
-    background: url('~@/assets/images/touxiang.jpg') no-repeat;
+    background: url("~@/assets/images/touxiang.jpg") no-repeat;
     background-size: 60px;
-
     ul {
       position: absolute;
       width: 160px;
       top: 70px;
       left: -50px;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, .3);
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
       border-radius: 10px;
       z-index: 100;
       display: none;
-
       li {
         width: 100%;
         height: 50px;
@@ -115,23 +116,19 @@ export default {
         font-size: 18px;
         text-align: center;
         background-color: #fff;
-
         &:first-child {
           border-bottom: 2px solid #eee;
           border-radius: 10px 10px 0 0;
         }
-
         &:last-child {
           border-radius: 0 0 10px 10px;
         }
-
         &:hover {
           color: #1d7dfa;
         }
       }
-
       &::before {
-        content: '';
+        content: "";
         position: absolute;
         display: inline-block;
         top: -20px;
@@ -142,7 +139,6 @@ export default {
         border-bottom-color: #fff;
       }
     }
-
     &:hover ul {
       display: block;
     }
