@@ -51,7 +51,7 @@
     <span @click="tools.addA" class="iconfont icon-lianjie" title="超链接"></span>
     <span
       @click="addImport"
-      @change="importFlie($event)"
+      @change="tools.importFlie($event)"
       class="iconfont icon-daoru"
       title="导入"
       ><input type="file" accept="text/*"
@@ -68,7 +68,7 @@
     <span @click="tools.choiceModle" class="iconfont icon-mobansheji" title="主题">
       <ul>
         <li
-          @click="changeTheme(t.name)"
+          @click="tools.changeTheme(t.name)"
           v-for="(t, index) of theme"
           :key="index"
         >
