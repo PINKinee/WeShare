@@ -12,7 +12,7 @@
         <textarea ref="l" @change="changeText"></textarea>
       </div>
       <div
-        class="richText-middle"
+        class="richText-middle orangeheart"
         @mouseover="mdStore().scrollPlace = 'pre'"
         @scroll="usePreScroll"
         v-html="aftcontent"
@@ -25,11 +25,11 @@
 </template>
 
 <script>
+import CodeMirror from "codemirror";
 import syntaxDes from "./syntaxDes.vue";
 import filesManageVue from "./filesManage.vue";
 import { marked } from "marked";
-import { ref, onMounted, watchEffect } from "vue";
-import CodeMirror from "codemirror";
+import { ref, onMounted } from "vue";
 import "highlight.js/styles/magula.css";
 import "codemirror/addon/fold/foldcode.js"; // 代码折叠
 import "codemirror/addon/fold/foldgutter.js"; // 代码折叠
@@ -43,7 +43,7 @@ import "codemirror/addon/selection/active-line.js"; // 当前行高亮
 import "codemirror/addon/edit/closetag.js";
 import "codemirror/addon/edit/closebrackets.js";
 import "codemirror/lib/codemirror.js";
-// 语言包（codemirror/mode目录下有目前支持的语言包，有额外需要可以自行导入）
+// 语言包
 import "codemirror/mode/javascript/javascript.js";
 import "codemirror/mode/groovy/groovy.js";
 // css
@@ -54,24 +54,25 @@ import "codemirror/lib/codemirror.css"; // 编辑器样式
 import "codemirror/theme/base16-light.css"; // 主题
 import md from "@/core/markdown.js";
 import "@/assets/css/orangeheart.css";
+import "@/assets/css/cobalt.css";
+import "@/assets/css/drake.css";
+import "@/assets/css/github.css";
+import "@/assets/css/newsprint.css";
 import flowchart from "flowchart.js";
 import "github-markdown-css";
 import "markdown-it-latex/dist/index.css";
 import * as echarts from "echarts/dist/echarts.simple.min";
 import mermaid from "mermaid";
 import mdStore from "@/store/codemirror";
-import useEdiScroll from "@/core/useEdiScroll";
-import usePreScroll from "@/core/usePreScroll";
+import useEdiScroll from "@/utils/useEdiScroll";
+import usePreScroll from "@/utils/usePreScroll";
+import fillNum from "@/utils/fillNum";
 
 export default {
   name: "richText",
   components: { syntaxDes, filesManageVue },
   props: ["theme"],
-  setup(props) {
-    watchEffect(() => {
-      console.log(props.theme);
-      require(`@/assets/css/${props.theme}`);
-    });
+  setup() {
     const files = [
       {
         id: 1,
@@ -148,61 +149,6 @@ export default {
     const aftcontent = ref("");
     // textarea文本框
     const l = ref(null);
-    // 当为有序无序列表时，填充序号
-    const fillNum = (e) => {
-      // 判断是不是enter键
-      if (e.keyCode == 13) {
-        const md = mdStore().md;
-        // 获取行号
-        const cursor = md.getCursor();
-        const lineNum = cursor.line;
-        // 获取上一行内容
-        const line = md.getLine(lineNum - 1);
-        let reg = /[1-9]. .*/;
-        // 判断是否为有序列表
-        if (reg.test(line)) {
-          let i = lineNum;
-          if (line.replace(/[1-9]. /, "") == "") {
-            md.setSelection(
-              { line: i - 1, ch: 0 },
-              { line: i - 1, ch: line.length }
-            );
-            md.replaceSelection(``);
-            return;
-          }
-          while (i > -1 && reg.test(md.getLine(--i))) {
-            continue;
-          }
-          let start = i + 1;
-          i = lineNum;
-          while (reg.test(md.getLine(++i))) {
-            continue;
-          }
-          let end = i - 1;
-          let n = 1;
-          for (let i = start; i <= end; i++) {
-            md.setSelection({ line: i, ch: 0 }, { line: i, ch: 3 });
-            md.replaceSelection(`${n++}. `);
-          }
-          md.setSelection({ line: lineNum, ch: md.getLine(lineNum).length });
-        }
-        reg = /[-+*] .*/;
-        // 判断是否为无序列表
-        if (reg.test(line)) {
-          let n = lineNum;
-          if (line.replace(/- /, "") == "") {
-            md.setSelection(
-              { line: n - 1, ch: 0 },
-              { line: n - 1, ch: line.length }
-            );
-            md.replaceSelection(``);
-          } else {
-            md.setSelection({ line: n, ch: 0 });
-            md.replaceSelection(`- `);
-          }
-        }
-      }
-    };
     // codemirror配置
     onMounted(() => {
       const editor = CodeMirror.fromTextArea(l.value, {
@@ -218,16 +164,17 @@ export default {
         dragDrop: true,
         matchBrackets: true,
         spellcheck: true,
-        allowDropFileTypes: ["text/html", "md"],
+        allowDropFileTypes: ["text/html", "text/x-markdown", "text/plain"],
       });
-      // editor.setSize('100%','100%');
-      editor.setOption("lineWrapping", true);
       // 当编辑器改变时
       editor.on("change", () => {
         new Promise((resolve) => {
           aftcontent.value = md.render(editor.getValue());
           resolve();
         }).then(() => {
+          // render mermaid
+          mermaid.init(undefined, document.querySelectorAll(".mermaid"));
+          mdStore().noEchart = aftcontent.value;
           document.querySelectorAll(".md-echarts").forEach((element) => {
             try {
               let options = JSON.parse(element.textContent);
@@ -237,14 +184,11 @@ export default {
               element.outerHTML = `<pre>echarts complains: ${e}</pre>`;
             }
           });
-          // render mermaid
-          mermaid.init(undefined, document.querySelectorAll(".mermaid"));
           // 制作流程图
           document.querySelectorAll(".md-flowchart").forEach((element) => {
             try {
               let code = element.textContent;
               let chart = flowchart.parse(code);
-              console.log(chart);
               element.textContent = "";
               chart.drawSVG(element);
             } catch (e) {
@@ -255,7 +199,7 @@ export default {
       });
       // 编辑监听滚动
       editor.on("scroll", useEdiScroll);
-      mdStore().md = editor;
+      mdStore().editor = editor;
     });
     return { aftcontent, l, fillNum, usePreScroll, mdStore, files };
   },
@@ -268,14 +212,14 @@ export default {
   width: 100%;
   height: calc(100vh - 160px);
   .filesArea {
-      position: absolute;
-      left: -20%;
-      top: 0;
-      width: 20%;
-      height: 100%;
-      background-color: #fff;
-      transition: all 0.5s;
-    }
+    position: absolute;
+    left: -20%;
+    top: 0;
+    width: 20%;
+    height: 100%;
+    background-color: #fff;
+    transition: all 0.5s;
+  }
   .mainEdiPlace {
     position: absolute;
     width: 100%;

@@ -8,7 +8,8 @@ export default (md) => {
         const json = JSON.parse(code)
         const width = json.width || 500
         const height = json.height || 400
-        return `<div line=${parseInt(token.map[0])} style="width:${width}px;height:${height}px" class="md-echarts">${JSON.stringify(json)}</div>`
+        const content = `<div line=${parseInt(token.map[0])} style="width:${width}px;height:${height}px" class="md-echarts">${JSON.stringify(json)}</div>`;
+        return content;
       } catch (e) { // JSON.parse exception
         return `<pre line=${parseInt(token.map[0])}>${e}</pre>`
       }

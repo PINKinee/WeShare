@@ -26,7 +26,7 @@
       >
         <div class="precode" v-html="c"></div>
         <div
-          v-if="types[index]=='表情'"
+          v-if="types[index] == '表情'"
           class="show"
           v-html="md.render(c.match(/##.*$/)[0])"
         ></div>
@@ -109,10 +109,10 @@ $$`,
       "[参考文档](https://mermaid-js.github.io/mermaid/#/gantt)<br><br><pre style='white-space: pre-wrap;'>```mermaid<br>gantt<br>dateFormat  YYYY-MM-DD<br>title Adding GANTT diagram functionality to mermaid<br>section 现有任务<br>已完成               :done,    des1, 2014-01-06,2014-01-08<br>进行中               :active,  des2, 2014-01-09, 3d<br>计划中               :         des3, after des2, 5d<br>```</pre>",
       "[参考文档](https://mermaid-js.github.io/mermaid/#/sequenceDiagram)<br><br>```mermaid<br>sequenceDiagram<br>张三 ->> 李四: 你好！李四, 最近怎么样?<br>李四-->>王五: 你最近怎么样，王五？<br>李四--x 张三: 我很好，谢谢!<br>李四-x 王五: 我很好，谢谢!<br>Note right of 王五: 李四想了很长时间, 文字太长了&lt;br/&gt;不适合放在一行.<br><br>李四-->>张三: 打量着王五...<br>张三->>王五: 很好... 王五, 你怎么样?<br>```",
       "[参考文档](https://mermaid-js.github.io/mermaid/#/flowchart?id=graph)<br><br>```mermaid<br>graph LR<br>A[长方形] -- 链接 --> B((圆))<br>A --> C(圆角长方形)<br>B --> D{菱形}<br>C --> D<br>```",
-      "[参考文档](http://flowchart.js.org/)<br><br>```mermaid<br>flowchat<br>st=>start: 开始<br>e=>end: 结束<br>op=>operation: 我的操作<br>cond=>condition: 确认？<br><br>st->op->cond<br>cond(yes)->e<br>cond(no)->op<br>```",
+      "[参考文档](http://flowchart.js.org/)<br><br>```flowchart<br>st=>start: 开始<br>e=>end: 结束<br>op=>operation: 我的操作<br>cond=>condition: 确认？<br><br>st->op->cond<br>cond(yes)->e<br>cond(no)->op<br>```",
       "[参考文档](https://mermaid-js.github.io/mermaid/#/classDiagram)<br><br><pre>```mermaid<br>classDiagram<br>Class01 <|-- AveryLongClass : Cool<br>Class09 --> C2 : Where am i?<br>Class09 --* C3<br>Class09 --|> Class07<br>Class07 : equals()<br>Class07 : Object[] elementData<br>Class01 : size()<br>Class01 : int chimp<br>Class01 : int gorilla<br>class Class10 {<br>    >>service>><br>    int id<br>    size()<br>}<br></pre>```",
       '<pre>```echarts<br>{<br>  "width": 500,<br>  "height": 400,<br>  "series": [<br>  {<br>    "name": "访问来源",<br>    "type": "pie",<br>    "radius": "55%",<br>    "data": [<br>    {<br>      "value": 235,<br>      "name": "视频广告"<br>    },<br>    {<br>      "value": 274,<br>      "name": "联盟广告"<br>    },<br>    {<br>      "value": 310,<br>      "name": "邮件营销"<br>    },<br>    {<br>      "value": 335,<br>      "name": "直接访问"<br>    },<br>    {<br>      "value": 400,<br>      "name": "搜索引擎"<br>     }<br>    ]<br>   }<br>  ]<br> }<br></pre>```',
-      '[参考文档](https://www.webfx.com/tools/emoji-cheat-sheet/)<br><br>## Emoji: :panda_face: :sparkles: :camel: :boom: :pig:<br><br>'
+      "[参考文档](https://www.webfx.com/tools/emoji-cheat-sheet/)<br><br>## Emoji: :panda_face: :sparkles: :camel: :boom: :pig:<br><br>",
     ];
     const atnIndex = ref(0);
     const types = [

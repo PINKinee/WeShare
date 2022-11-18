@@ -2,8 +2,9 @@ import { defineStore } from 'pinia'
 export default defineStore('mystore', {
     state: () => {
         return {
-            md: null,
-            scrollPlace: ''
+            editor: null,
+            scrollPlace: '',
+            noEchart: ''//未经过echarts编译的内容
         }
     },
 })
