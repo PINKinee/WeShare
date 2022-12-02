@@ -1,8 +1,8 @@
 <template>
   <div class="editor">
     <editorHeader></editorHeader>
-    <editorTools></editorTools>
-    <mainContents></mainContents>
+    <editorTools @changeTheme="tranTheme"></editorTools>
+    <mainContents :theme="theme"></mainContents>
   </div>
 </template>
 
@@ -10,9 +10,17 @@
 import editorHeader from "../components/Markdown/Header.vue";
 import editorTools from "../components/Markdown/editorTools.vue";
 import mainContents from "../components/Markdown/mainContents.vue";
+import { ref } from 'vue'
 export default {
   name: "editorPage",
   components: { editorHeader, editorTools, mainContents },
+  setup() {
+    let theme = ref('orangeheart.css');
+    const tranTheme = (t) => {
+      theme.value = t;
+    };
+    return { tranTheme, theme };
+  },
 };
 </script>
 

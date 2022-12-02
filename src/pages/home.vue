@@ -4,7 +4,7 @@
             <homeHeader></homeHeader>
             <center></center>
             <div class="footer">
-                <btn :content="'我要登录'"></btn>
+                <btn :content="'我要使用'" @click="jump"></btn>
             </div>
         </div>
     </div>
@@ -14,12 +14,20 @@
 import homeHeader from '../components/Home/header.vue'
 import center from '../components/Home/center.vue'
 import btn from '../components/Home/button.vue'
+import { useRouter } from 'vue-router';
 export default {
     name: 'home',
     components: {
         homeHeader,
         center,
         btn
+    },
+    setup() {
+        const router = useRouter();
+        const jump = () => router.push('/personal');
+        return {
+            jump
+        }
     }
 };
 

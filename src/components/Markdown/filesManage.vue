@@ -1,14 +1,12 @@
 <template>
-  <div class="fileManage">
+  <div class="fileArea">
     <!-- item.state决定箭头方向-->
     <li class="iconfont icon-jiantouyou" v-for="item in newFiles" :key="item.id" @click.stop="item.state = !item.state"
       @mouseover.stop="add($event)" @mouseout.stop="remove($event)">
       {{ " " + item.name }}
-      <!-- <transition name="fade"> -->
       <ul v-show="item.state" v-if="item?.children?.length">
         <filesManage :files="item.children" />
       </ul>
-      <!-- </transition> -->
     </li>
   </div>
 </template>
@@ -35,7 +33,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-.fileManage {
+.fileArea {
   margin-left: 15px;
 
   li {
@@ -45,6 +43,7 @@ export default {
     line-height: 50px;
     cursor: pointer;
     margin: 5px 5px;
+    list-style: none;
   }
 }
 

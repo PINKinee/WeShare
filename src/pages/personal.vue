@@ -4,7 +4,8 @@
             <perHeaderVue></perHeaderVue>
             <div class="main">
                 <div class="left">
-                    <userMsgVue></userMsgVue>
+                    <userMsgVue>
+                    </userMsgVue>
                 </div>
                 <div class="right">
                     <perFileVue></perFileVue>
@@ -12,21 +13,25 @@
             </div>
         </div>
     </div>
+    <teleport to="body">
+        <pop></pop>
+    </teleport>
 </template>
 
 <script>
 import perHeaderVue from '@/components/Personal/perHeader.vue';
-import perFileVue from '@/components/Personal/perFile.vue';
-import userMsgVue from '@/components/Personal/userMsg.vue';
+import perFileVue from '@/components/Personal/files.vue';
+import userMsgVue from '@/components/Personal/userInfo.vue';
+import pop from '@/components/pop.vue';
 export default {
     name: 'personal',
     components: {
         perHeaderVue,
         userMsgVue,
-        perFileVue
+        perFileVue,
+        pop
     },
     setup() {
-
     }
 }
 
@@ -42,7 +47,6 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    // background-color: #fafafa;
     background: url('@/assets/images/selfBGI.png') no-repeat left bottom;
 
 
@@ -54,6 +58,8 @@ export default {
         overflow: hidden;
         box-shadow: 0 10px 10px rgba(0, 0, 0, 0.06);
         background-color: white;
+        // border: 1px solid gray;
+        box-shadow: rgb(190, 190, 190) 0px 0px 10px;
 
         .main {
             width: 100%;
@@ -76,6 +82,7 @@ export default {
                 height: 100%;
                 box-sizing: border-box;
                 overflow-y: scroll;
+                overflow-x: hidden;
             }
         }
     }

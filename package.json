@@ -3,11 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "concurrently \"node node_modules/y-webrtc/bin/server.js\" \"vue-cli-service serve\"",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "y-codemirror": "^2.1.1",
+    "y-webrtc": "^10.1.6",
+    "yjs": "^13.5.22",
+    "prosemirror-model": "^1.18.1",
+    "pinia-plugin-persistedstate": "^2.4.0",
+    "mitt": "^3.0.0",
+    "element-plus": "^2.2.21",
+    "animate.css": "^4.1.1",
+    "concurrently": "^7.5.0",
     "axios": "^1.1.3",
     "core-js": "^3.8.3",
     "dom-to-image": "^2.6.0",
@@ -57,7 +66,9 @@
     "markdown-it-sup": "^1.0.0",
     "markdown-it-task-lists": "^2.1.1",
     "markdown-it-toc-and-anchor": "^4.2.0",
-    "mermaid": "^8.9.2"
+    "mermaid": "^8.9.2",
+    "unplugin-auto-import": "^0.11.4",
+    "unplugin-vue-components": "^0.22.9"
   },
   "eslintConfig": {
     "root": true,

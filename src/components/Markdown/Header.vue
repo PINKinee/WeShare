@@ -1,10 +1,6 @@
 <template>
   <div class="header">
-    <span
-      class="iconfont icon-jiantouyou"
-      title="打开文件夹"
-      @click="changeState($event)"
-    ></span>
+    <span class="iconfont icon-jiantouyou" title="打开文件夹" @click="changeState($event)"></span>
     <input type="text" placeholder="输入文件标题…" />
     <span class="touxiang">
       <ul class="userMeg">
@@ -49,6 +45,7 @@ export default {
 li {
   list-style: none;
 }
+
 .header {
   width: 100%;
   min-width: 1000px;
@@ -56,6 +53,7 @@ li {
   line-height: 80px;
   background-color: #fff;
   border-bottom: 1px solid #eee;
+
   span {
     float: left;
     width: 80px;
@@ -67,6 +65,7 @@ li {
     font-size: 30px;
     color: #86909c;
   }
+
   input {
     float: left;
     width: 50%;
@@ -77,6 +76,7 @@ li {
     color: #86909c;
     background-color: transparent;
   }
+
   button {
     float: right;
     width: 100px;
@@ -89,6 +89,7 @@ li {
     color: #1d7dfa;
     margin-top: 16px;
   }
+
   .touxiang {
     position: relative;
     float: right;
@@ -100,6 +101,7 @@ li {
     margin-right: 70px;
     background: url("~@/assets/images/touxiang.jpg") no-repeat;
     background-size: 60px;
+
     ul {
       position: absolute;
       width: 160px;
@@ -109,6 +111,7 @@ li {
       border-radius: 10px;
       z-index: 100;
       display: none;
+
       li {
         width: 100%;
         height: 50px;
@@ -116,17 +119,21 @@ li {
         font-size: 18px;
         text-align: center;
         background-color: #fff;
+
         &:first-child {
           border-bottom: 2px solid #eee;
           border-radius: 10px 10px 0 0;
         }
+
         &:last-child {
           border-radius: 0 0 10px 10px;
         }
+
         &:hover {
           color: #1d7dfa;
         }
       }
+
       &::before {
         content: "";
         position: absolute;
@@ -139,6 +146,7 @@ li {
         border-bottom-color: #fff;
       }
     }
+
     &:hover ul {
       display: block;
     }

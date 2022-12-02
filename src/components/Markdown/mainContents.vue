@@ -4,19 +4,11 @@
       <filesManageVue :files="files"></filesManageVue>
     </div>
     <div class="mainEdiPlace">
-      <div
-        class="richText-left"
-        @mouseover="mdStore().scrollPlace = 'edi'"
-        @keydown="fillNum"
-      >
+      <div class="richText-left" @mouseover="mdStore().scrollPlace = 'edi'" @keydown="fillNum">
         <textarea ref="l" @change="changeText"></textarea>
       </div>
-      <div
-        class="richText-middle orangeheart"
-        @mouseover="mdStore().scrollPlace = 'pre'"
-        @scroll="usePreScroll"
-        v-html="aftcontent"
-      ></div>
+      <div class="richText-middle orangeheart" @mouseover="mdStore().scrollPlace = 'pre'" @scroll="usePreScroll"
+        v-html="aftcontent"></div>
       <div class="richText-right">
         <syntaxDes></syntaxDes>
       </div>
@@ -67,6 +59,10 @@ import mdStore from "@/store/codemirror";
 import useEdiScroll from "@/utils/useEdiScroll";
 import usePreScroll from "@/utils/usePreScroll";
 import fillNum from "@/utils/fillNum";
+
+import * as Y from 'yjs'
+import { CodemirrorBinding } from 'y-codemirror'
+import { WebrtcProvider } from 'y-webrtc'
 
 export default {
   name: "richText",
@@ -151,6 +147,17 @@ export default {
     const l = ref(null);
     // codemirror配置
     onMounted(() => {
+      // 引入y-webrtc
+      const ydoc = new Y.Doc();
+      const provider = new WebrtcProvider('weShareMd', ydoc,
+        {
+          signaling: ['ws:localhost:4444'],
+          filterBcConns: true
+        }
+      );
+      const yText = ydoc.getText('codemirror');
+      const yUndoManager = new Y.UndoManager(yText);
+
       const editor = CodeMirror.fromTextArea(l.value, {
         mode: "markdown",
         theme: "base16-light",
@@ -166,8 +173,20 @@ export default {
         spellcheck: true,
         allowDropFileTypes: ["text/html", "text/x-markdown", "text/plain"],
       });
+      // 绑定codeMirror
+      const binding = new CodemirrorBinding(yText, editor, provider.awareness, {
+        // 使用这个自带的撤销重做方法
+        yUndoManager
+      });
+      // 修改用户名为指定名称
+      binding.awareness.setLocalStateField('user',
+        // 暂时先这么写，等有了接口再改为用户名变量
+        { color: '#008833', name: 'PINKinee' }
+      )
+
       // 当编辑器改变时
       editor.on("change", () => {
+        console.log(editor.getValue());
         new Promise((resolve) => {
           aftcontent.value = md.render(editor.getValue());
           resolve();
@@ -211,6 +230,7 @@ export default {
   position: relative;
   width: 100%;
   height: calc(100vh - 160px);
+
   .filesArea {
     position: absolute;
     left: -20%;
@@ -220,6 +240,7 @@ export default {
     background-color: #fff;
     transition: all 0.5s;
   }
+
   .mainEdiPlace {
     position: absolute;
     width: 100%;
@@ -227,6 +248,7 @@ export default {
     left: 0%;
     display: flex;
     transition: all 0.5s;
+
     .richText-left {
       height: 100%;
       width: 40%;
@@ -235,14 +257,17 @@ export default {
       transition: all 0.5s;
       border-right: 2px solid #eee;
       outline: none;
+
       textarea {
         height: 100%;
       }
+
       .CodeMirror {
         padding-top: 20px;
         border: 1px solid #eee;
         height: 100%;
       }
+
       .CodeMirror-sizer {
         height: 100%;
       }
@@ -256,10 +281,12 @@ export default {
       padding: 20px;
       transition: all 0.5s;
       overflow-y: scroll;
+
       img {
         max-width: 100%;
       }
     }
+
     .richText-right {
       width: 20%;
       height: 100%;
@@ -268,15 +295,18 @@ export default {
       overflow-y: scroll;
     }
   }
+
   ::-webkit-scrollbar,
   ::-webkit-scrollbar-track {
     width: 6px;
     background-color: transparent;
   }
+
   ::-webkit-scrollbar-thumb {
     border-radius: 6px;
     background-color: #bbb;
   }
+
   ::-webkit-scrollbar,
   ::-webkit-scrollbar-track {
     background-color: transparent;

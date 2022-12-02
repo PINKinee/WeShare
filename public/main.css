@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: PingFangSC-Semibold,PingFang SC;
+    font-family: PingFangSC-Semibold, PingFang SC;
     touch-action: pan-y;
 }
 
@@ -12,7 +12,9 @@ a {
 }
 
 
-input,button,textarea {
+input,
+button,
+textarea {
     outline: none;
 }
 

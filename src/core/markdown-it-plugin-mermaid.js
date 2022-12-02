@@ -1,6 +1,6 @@
 import mermaid from 'mermaid'
 
-const mermaidChart = (code,token) => {
+const mermaidChart = (code, token) => {
   try {
     mermaid.parse(code)
     return `<div line=${parseInt(token.map[0])} class="mermaid">${code}</div>`
@@ -21,11 +21,11 @@ const MermaidPlugin = (md, opts) => {
     const token = tokens[idx]
     const code = token.content.trim()
     if (token.info === 'mermaid') {
-      return mermaidChart(code,token)
+      return mermaidChart(code, token)
     }
     const firstLine = code.split(/\n/)[0].trim()
     if (firstLine === 'gantt' || firstLine === 'sequenceDiagram' || firstLine.match(/^graph (?:TB|BT|RL|LR|TD);?$/)) {
-      return mermaidChart(code,token)
+      return mermaidChart(code, token)
     }
     return temp(tokens, idx, options, env, slf)
   }

@@ -9,9 +9,7 @@
                 <div class="textBox">
                     <span>个人身份验证</span>
                 </div>
-
             </div>
-            <!-- v-show -->
             <div class="footer">
                 <ul>
                     <li @click="changeIndex($event)">
@@ -23,19 +21,21 @@
                 <div class="bottomBox">
                     <div class="loginBox" v-show="!tabIndex">
                         <div>
-                            账号<input type="text"><br />
-                            密码<input type="password"><br />
+                            邮箱<input type="text" v-model="logInfo.userEmail"><br />
+                            密码<input type="password" v-model="logInfo.userPassword"><br />
                             <div class="scale">
-                                <btn :content="requires[0]"></btn>
+                                <btn :content="requires[0]" @click="checkLog($event)"></btn>
                             </div>
                         </div>
                     </div>
                     <div class="registerBox" v-show="tabIndex">
                         <div>
-                            请输入账号<input type="text"><br />
-                            请设置密码<input type="password"><br />
-                            请确认密码<input type="password"><br />
-                            <div class="scale">
+                            请输入邮箱<input type="text" v-model="regInfo.userEmail"><br />
+                            请创建账号<input type="text" v-model="regInfo.userName"><br />
+                            请设置密码<input type="password" v-model="regInfo.userPassword"><br />
+                            请确认密码<input type="password" v-model="regInfo.rePsw"><br />
+                            <!-- 再增加keyup事件 -->
+                            <div class="scale" @click="checkReg">
                                 <btn :content="requires[1]"></btn>
                             </div>
                         </div>
@@ -47,24 +47,75 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, getCurrentInstance, onMounted } from 'vue';
+import { register, login, getUserMsg } from '@/api/userService'
+import { checkEmail, judgePsw, checkNull } from '@/utils/check'
 import btn from '../components/Home/button.vue';
+import { useRouter } from 'vue-router'
+import userStore from '@/store/userStore';
+// import jwt_decode from 'jwt-decode';
 export default {
     name: 'login',
     components: {
         btn
     },
     setup() {
+        const { proxy } = getCurrentInstance();
+        const router = useRouter();
+        const uStore = userStore();
+        // 切换栏
         let tabIndex = ref(0);
-        const requires = [
-            '我要登录',
-            '我要注册'
-        ]
-        const changeIndex = e => tabIndex.value = e.target.innerText === '我要登录' ? 0 : 1;
+        const requires = ['我要登录', '我要注册'];
+        const changeIndex = e => tabIndex.value = e.target.innerText === requires[0] ? 0 : 1;
+        // 注册
+        const regInfo = {
+            userEmail: '',
+            userPassword: '',
+            userName: '',
+            rePsw: ''
+        }
+        const checkReg = () => {
+            const { userEmail, userPassword, rePsw } = regInfo;
+            checkEmail(userEmail)
+                ? judgePsw(userPassword, rePsw)
+                    ? register(regInfo).then(({ message }) => proxy.$msg.success(message))
+                        .catch(({ message }) => proxy.$msg.error(message))
+                    : proxy.$msg.error('两次密码不一致')
+                : proxy.$msg.error('邮箱格式有误');
+        }
+        // 登录
+        const logInfo = {
+            userEmail: '',
+            userPassword: ''
+        }
+        const checkLog = (e) => {
+            if (!localStorage.getItem('token')) {
+                login(logInfo).then(async ({ data, message }) => {
+                    const token = JSON.parse(data).token;
+                    localStorage.setItem('token', token);
+                    localStorage.setItem('flag', '您已登录');
+                    const res = await getUserMsg();
+                    uStore.setUser(res.data);
+                    // 登录之后将标志存到localstorage中,重新挂载时获取localstorage数据并修改文本
+                    e.target.innerHTML = localStorage.getItem('flag');
+                    proxy.$msg.success(message);
+                    router.push('/personal');
+                }).catch(({ message }) => proxy.$msg.error(message));
+            } else {
+                proxy.$msg.error('您已登录');
+            }
+        }
+        onMounted(() => {
+            console.log(uStore.getUser);
+        })
         return {
             tabIndex,
             requires,
-            changeIndex
+            regInfo,
+            logInfo,
+            changeIndex,
+            checkReg,
+            checkLog
         }
     }
 };
@@ -79,6 +130,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
     background: url('@/assets/images/bizhi.png') no-repeat left bottom,
         url('@/assets/images/bizhi2.png') no-repeat right bottom;
 
@@ -142,6 +194,7 @@ export default {
                     width: 80%;
                     height: 45px;
                     box-shadow: rgba(0, 0, 0, 0.04) 0px 0px 2px;
+                    list-style: none;
 
                     span {
                         display: inline-block;
@@ -185,9 +238,9 @@ export default {
                         line-height: 45px;
 
                         input {
-                            width: 170px;
-                            height: 25px;
-                            margin-left: 10px;
+                            width: 175px;
+                            height: 27px;
+                            margin-left: 12px;
                             padding-left: 5px;
                             border-radius: 5px;
                             border: 1px solid gray;

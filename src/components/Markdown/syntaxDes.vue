@@ -4,12 +4,8 @@
     <span class="iconfont icon-chahao" @click="close"></span>
   </div>
   <ul class="syntaxDes-mid">
-    <li
-      v-for="(t, index) of types"
-      :key="index"
-      @click="atnIndex = index"
-      :style="{ color: atnIndex == index ? '#3284cf' : '#555' }"
-    >
+    <li v-for="(t, index) of types" :key="index" @click="atnIndex = index"
+      :style="{ color: atnIndex == index ? '#3284cf' : '#555' }">
       {{ t }}
     </li>
   </ul>
@@ -19,17 +15,9 @@
       <span @click="copyContent">复制</span>
     </div>
     <ul ref="ct">
-      <li
-        v-for="(c, index) of contents"
-        :key="index"
-        :style="{ display: atnIndex == index ? 'block' : 'none' }"
-      >
+      <li v-for="(c, index) of contents" :key="index" :style="{ display: atnIndex == index ? 'block' : 'none' }">
         <div class="precode" v-html="c"></div>
-        <div
-          v-if="types[index] == '表情'"
-          class="show"
-          v-html="md.render(c.match(/##.*$/)[0])"
-        ></div>
+        <div v-if="types[index] == '表情'" class="show" v-html="md.render(c.match(/##.*$/)[0])"></div>
       </li>
     </ul>
   </div>
@@ -157,13 +145,16 @@ $$`,
 li {
   list-style: none;
 }
+
 .syntaxDes-header {
   width: 100%;
   height: 40px;
   line-height: 40px;
+
   h2 {
     float: left;
   }
+
   span {
     float: right;
     width: 40px;
@@ -174,6 +165,7 @@ li {
     cursor: pointer;
   }
 }
+
 .syntaxDes-mid {
   display: flex;
   width: 100%;
@@ -181,6 +173,7 @@ li {
   margin-top: 14px;
   padding-bottom: 10px;
   border-bottom: 2px solid #eee;
+
   li {
     padding: 5px 10px;
     border-radius: 10px;
@@ -188,6 +181,7 @@ li {
     margin-right: 5px;
     margin-bottom: 7px;
     cursor: pointer;
+
     &:hover {
       color: #3284cf;
     }
@@ -196,13 +190,16 @@ li {
 
 .syntaxDes-bottom {
   width: 100%;
+
   .sbt {
     width: 100%;
     height: 40px;
     margin-top: 10px;
+
     h2 {
       float: left;
     }
+
     span {
       color: #3385cf;
       font-weight: 700;
@@ -210,12 +207,14 @@ li {
       cursor: pointer;
     }
   }
+
   li {
     display: none;
     word-wrap: break-word;
     word-break: break-all;
     overflow: hidden;
     line-height: 30px;
+
     &:first-child {
       display: block;
     }
