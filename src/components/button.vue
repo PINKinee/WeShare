@@ -30,6 +30,7 @@ button {
     background-color: white;
     color: gray;
     border: 1px solid gray;
+    overflow: visible !important;
 
     &:hover {
         border: 2px solid #3284cf;
@@ -37,6 +38,7 @@ button {
 
     &:hover span {
         color: #3284cf;
+        overflow: visible !important;
     }
 
 }

@@ -1,5 +1,6 @@
-import axiosInstance from "@/utils/request";
-export const register = (params) => axiosInstance({
+import axiosInstance from "@/api/request";
+// 注册
+export const register = params => axiosInstance({
     url: '/user/register',
     data: params,
     method: 'post',
@@ -7,8 +8,8 @@ export const register = (params) => axiosInstance({
         "Content-Type": "application/x-www-form-urlencoded"
     }
 });
-
-export const login = (params) => axiosInstance({
+// 登录
+export const login = params => axiosInstance({
     url: '/user/login',
     data: params,
     method: 'post',
@@ -16,7 +17,7 @@ export const login = (params) => axiosInstance({
         "Content-Type": "application/x-www-form-urlencoded"
     }
 });
-
+// 获取用户信息
 export const getUserMsg = () => axiosInstance({
     url: `/user/getUserInformation`,
     method: 'get',
@@ -24,16 +25,17 @@ export const getUserMsg = () => axiosInstance({
         "Content-Type": "application/x-www-form-urlencoded"
     }
 })
-
-export const modifyUserName = (username) => axiosInstance({
-    url: `/user/modify?username=${username}`,
+// 修改用户名称
+export const modifyUserName = params => axiosInstance({
+    url: `/user/modify/username`,
     method: 'put',
+    data: params,
     headers: {
-        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+        "Content-Type": "application/x-www-form-urlencoded"
     }
 })
-
-export const uploadAvator = (params) => axiosInstance({
+// 上传(修改)头像
+export const uploadAvator = params => axiosInstance({
     url: `/user/picture`,
     method: 'post',
     data: params,

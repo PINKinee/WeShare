@@ -24,11 +24,12 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, getCurrentInstance } from "vue";
 import md from "@/core/markdown.js";
 export default {
   name: "syntaxDes",
   setup() {
+    const { proxy } = getCurrentInstance();
     const ct = ref(null);
     const contents = [
       `<h1># 一级标题</h1>
@@ -135,6 +136,7 @@ $$`,
       navigator.clipboard.writeText(
         ct.value.querySelectorAll("li")[atnIndex.value].innerText
       );
+      proxy.$msg.success('复制成功');
     };
     return { types, contents, atnIndex, close, copyContent, ct, md };
   },

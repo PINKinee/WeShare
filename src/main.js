@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router/index.js'
 import filesManage from '@/components/Markdown/filesManage.vue'
 import pinia from './store'
+import lodash from 'lodash'
 // import piniaPluginPersist from 'pinia-plugin-persist'
 // import { usePersist } from 'pinia-use-persist'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
@@ -20,4 +21,5 @@ app.use(pinia);
 app.use(router);
 app.config.globalProperties.$msg = ElMessage;
 app.config.globalProperties.$bus = new mitt();
+app.config.globalProperties.$lodash = lodash;
 app.mount('#app');

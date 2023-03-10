@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import deleteEl from '@/utils/deleteEl'
 export default defineStore('userStore', {
     persist: {
         enabled: true,
@@ -8,35 +7,30 @@ export default defineStore('userStore', {
         return {
             user: {
             },
-            folderList: [],
-            articleList: []
+            // 我创建的文章列表(每创建一篇文章就push进来)
+            createArticleList: [],
+            // 每一篇文章的权限
+            articleAuth: new Map(),
+            // 记录当前文章信息
+            // curArticleMsg: [],
+            // 我参与的文章列表
+            // joinArticleList: [],
         }
     },
-    getters: {
-        getUser: state => state.user,
-        getFolderList: state => state.folderList
-    },
+    // 计算属性
+    // getters: {},
     actions: {
         setUser(user) {
             this.user = user;
         },
-        setFolderList(folderList) {
-            this.folderList = folderList;
+        setCreateArticleList(article) {
+            this.createArticleList.push(article);
         },
-        addFolder(newFolder) {
-            this.folderList.push(newFolder);
-        },
-        deleteFolder(folderId) {
-            deleteEl(this.folderList, folderId, 'folderId')
-        },
-        setArticleList(articleList) {
-            this.articleList = articleList;
-        },
-        addArticle(newArticle) {
-            this.articleList.push(newArticle);
-        },
-        deleteArticle(articleId) {
-            deleteEl(this.articleList, articleId, 'articleId');
-        }
+        // setCurArticleMsg(msg) {
+        //     this.curArticleMsg = msg;
+        // },
+        // setJoinArticleList(article) {
+        //     this.joinArticleList.push(article);
+        // }
     },
 })

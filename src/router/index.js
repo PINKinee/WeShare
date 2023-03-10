@@ -17,20 +17,20 @@ const router = new createRouter({
             component: () => import('@/pages/login.vue')
         },
         {
+            name: 'personal',
             path: '/personal',
             component: () => import('@/pages/personal.vue')
         },
         {
-            path: '/EditorPage',
+            path: '/editorPage',
             component: () =>
-                import('@/pages/EditorPage.vue')
+                import('@/pages/editorPage.vue')
         }
     ]
 })
 
-// router.beforeEach((to, from, next) => {
-//     !userInfo.getAuthenticated && to.name !== ('home' && 'login')
-//         ? next({ name: 'login' })
-//         : next();
-// })
+router.beforeEach((to, from, next) => {
+    const token = localStorage.getItem('token');
+    (token === null || token === '') && to.name === 'personal' ? next({ name: 'home' }) : next();
+})
 export default router

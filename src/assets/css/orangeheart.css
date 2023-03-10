@@ -35,7 +35,6 @@
   background-position: 10px 10px;
 } */
 }
-
 .orangeheart p {
   font-size: 16px;
   padding-top: 8px;
@@ -44,7 +43,6 @@
   line-height: 26px;
   color: black;
 }
-
 .orangeheart h1,
 .orangeheart h2,
 .orangeheart h3,
@@ -57,16 +55,13 @@
   font-weight: bold;
   color: black;
 }
-
 .orangeheart h1 {
   font-size: 1.5rem;
 }
-
 .orangeheart h2 {
   font-size: 1.3rem;
   border-bottom: 2px solid #ef7060;
 }
-
 .orangeheart h2 span {
   display: inline-block;
   font-weight: bold;
@@ -77,7 +72,6 @@
   border-top-left-radius: 3px;
   margin-right: 3px;
 }
-
 .orangeheart h2:after {
   display: inline-block;
   content: "";
@@ -85,23 +79,18 @@
   border-bottom: 36px solid #efebe9;
   border-right: 20px solid transparent;
 }
-
 .orangeheart h3 {
   font-size: 1.2rem;
 }
-
 .orangeheart h4 {
   font-size: 1.1rem;
 }
-
 .orangeheart h5 {
   font-size: 1rem;
 }
-
 .orangeheart h6 {
   font-size: 1rem;
 }
-
 .orangeheart ul,
 .orangeheart ol {
   margin-top: 8px;
@@ -109,19 +98,15 @@
   padding-left: 25px;
   color: black;
 }
-
 .orangeheart ul {
   list-style-type: disc;
 }
-
 .orangeheart ul ul {
   list-style-type: square;
 }
-
 .orangeheart ol {
   list-style-type: decimal;
 }
-
 .orangeheart li section {
   margin-top: 5px;
   margin-bottom: 5px;
@@ -131,7 +116,6 @@
   /* 只要是纯黑色微信编辑器就会把color这个属性吞掉。。。*/
   font-weight: 500;
 }
-
 .orangeheart blockquote {
   display: block;
   font-size: 0.9em;
@@ -144,13 +128,11 @@
   margin-top: 20px;
   background: #fff9f9;
 }
-
 .orangeheart blockquote p {
   margin: 0px;
   color: black;
   line-height: 26px;
 }
-
 .orangeheart a {
   text-decoration: none;
   word-wrap: break-word;
@@ -159,7 +141,6 @@
   color: #ef7060;
   border-bottom: 1px solid #ef7060;
 }
-
 .orangeheart p code,
 .orangeheart li code {
   font-size: 14px;
@@ -172,38 +153,31 @@
   font-family: Operator Mono, Consolas, Monaco, Menlo, monospace;
   word-break: break-all;
 }
-
 .orangeheart img {
   display: block;
   margin: 0 auto;
   max-width: 100%;
 }
-
 .orangeheart span img {
   display: inline-block;
   border-right: 0px;
   border-left: 0px;
 }
-
 .orangeheart table {
   display: table;
   text-align: left;
 }
-
 .orangeheart tbody {
   border: 0;
 }
-
 .orangeheart table tr {
   border: 0;
   border-top: 1px solid #ccc;
   background-color: white;
 }
-
 .orangeheart table tr:nth-child(2n) {
   background-color: #F8F8F8;
 }
-
 .orangeheart table tr th,
 .orangeheart table tr td {
   font-size: 16px;
@@ -211,43 +185,34 @@
   padding: 5px 10px;
   text-align: left;
 }
-
 .orangeheart table tr th {
   font-weight: bold;
   background-color: #f0f0f0;
 }
-
 .orangeheart span code,
 .orangeheart li code {
   color: #ef7060;
 }
-
 .orangeheart .md-footnote {
   font-weight: bold;
   color: #ef7060;
 }
-
-.orangeheart .md-footnote>.md-text:before {
+.orangeheart .md-footnote > .md-text:before {
   content: '[';
 }
-
-.orangeheart .md-footnote>.md-text:after {
+.orangeheart .md-footnote > .md-text:after {
   content: ']';
 }
-
 .orangeheart .md-def-name {
   padding-right: 1.8ch;
 }
-
 .orangeheart .md-def-name:before {
   content: '[';
   color: #000;
 }
-
 .orangeheart .md-def-name:after {
   color: #000;
 }
-
 .orangeheart .cm-s-inner.CodeMirror {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -256,105 +221,82 @@
   font-family: Consolas;
   border-radius: 4px;
 }
-
 .orangeheart .CodeMirror-lines {
   padding-left: 4px;
 }
-
 .orangeheart .cm-s-inner .cm-keyword {
   color: #c792ea;
 }
-
 .orangeheart .cm-s-inner .cm-operator {
   color: #89ddff;
 }
-
 .orangeheart .cm-s-inner .cm-variable-2 {
   color: #eeffff;
 }
-
 .orangeheart .cm-s-inner .cm-variable-3,
 .orangeheart .cm-s-inner .cm-type {
   color: #f07178;
 }
-
 .orangeheart .cm-s-inner .cm-builtin {
   color: #ffcb6b;
 }
-
 .orangeheart .cm-s-inner .cm-atom {
   color: #f78c6c;
 }
-
 .orangeheart .cm-s-inner .cm-number {
   color: #ff5370;
 }
-
 .orangeheart .cm-s-inner .cm-def {
   color: #82aaff;
 }
-
 .orangeheart .cm-s-inner .cm-string {
   color: #c3e88d;
 }
-
 .orangeheart .cm-s-inner .cm-string-2 {
   color: #f07178;
 }
-
 .orangeheart .cm-s-inner .cm-comment {
   color: #676e95;
 }
-
 .orangeheart .cm-s-inner .cm-variable {
   color: #f07178;
 }
-
 .orangeheart .cm-s-inner .cm-tag {
   color: #ff5370;
 }
-
 .orangeheart .cm-s-inner .cm-meta {
   color: #ffcb6b;
 }
-
 .orangeheart .cm-s-inner .cm-attribute {
   color: #c792ea;
 }
-
 .orangeheart .cm-s-inner .cm-property {
   color: #c792ea;
 }
-
 .orangeheart .cm-s-inner .cm-qualifier {
   color: #decb6b;
 }
-
 .orangeheart .cm-s-inner .cm-variable-3,
 .orangeheart .cm-s-inner .cm-type {
   color: #decb6b;
 }
-
 .orangeheart .cm-s-inner .cm-error {
   color: #ffffff;
   background-color: #ff5370;
 }
-
 .orangeheart .cm-s-inner .CodeMirror-matchingbracket {
   text-decoration: underline;
   color: white !important;
 }
-
 .orangeheart .CodeMirror div.CodeMirror-cursor {
   border-left: 1px solid #ef7060;
   z-index: 3;
 }
-
 img {
-  max-width: 500px;
+	max-width: 500px;
 }
 
 * {
-  margin: 0;
-  padding: 0;
+	margin: 0;
+	padding: 0;
 }

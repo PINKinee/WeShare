@@ -4,8 +4,7 @@
             <perHeaderVue></perHeaderVue>
             <div class="main">
                 <div class="left">
-                    <userMsgVue>
-                    </userMsgVue>
+                    <userMsgVue></userMsgVue>
                 </div>
                 <div class="right">
                     <perFileVue></perFileVue>
@@ -41,21 +40,20 @@ export default {
 .wholePage {
     width: 100vw;
     height: 100vh;
-    min-width: 1100px;
+    min-width: 1200px;
     min-height: 560px;
-    overflow: hidden;
+    // overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
     background: url('@/assets/images/selfBGI.png') no-repeat left bottom;
-
 
     .personalBox {
         width: 75%;
         height: 75%;
         border-radius: 40px;
         box-sizing: border-box;
-        overflow: hidden;
+        // overflow: hidden;
         box-shadow: 0 10px 10px rgba(0, 0, 0, 0.06);
         background-color: white;
         // border: 1px solid gray;
@@ -65,7 +63,7 @@ export default {
             width: 100%;
             height: 85%;
             box-sizing: border-box;
-            overflow: hidden;
+            // overflow: hidden;
 
             .left {
                 display: inline-block;

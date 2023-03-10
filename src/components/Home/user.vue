@@ -1,15 +1,25 @@
 <template>
-    <div class="userBox">
+    <div class="userBox" v-show="user.userId">
         <span class="avator">
-            <img src="@/assets/images/touxiang.jpg" alt="">
+            <img :src="user.portraitPath" alt="">
         </span>
-        <span class="userName">PINKinee</span>
+        <span class="userName">
+            {{ user.userName }}
+        </span>
     </div>
 </template>
 
 <script>
+import userStore from '@/store/userStore';
 export default {
     name: 'user',
+    setup() {
+        const uStore = userStore();
+        const { user } = uStore;
+        return {
+            user
+        }
+    }
 };
 
 </script>

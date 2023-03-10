@@ -29,11 +29,16 @@ export default {
             width: 60px;
             padding: 20px 0px 5px 10px;
         }
+
+        &:nth-child(2) {
+            font-size: 22px;
+            padding: 30px 0px 10px 10px;
+        }
     }
 
-    span:nth-child(2) {
-        font-size: 22px;
-        padding: 30px 0px 10px 10px;
-    }
+    // span:nth-child(2) {
+    //     font-size: 22px;
+    //     padding: 30px 0px 10px 10px;
+    // }
 }
 </style>

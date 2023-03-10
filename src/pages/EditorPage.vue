@@ -4,16 +4,20 @@
     <editorTools @changeTheme="tranTheme"></editorTools>
     <mainContents :theme="theme"></mainContents>
   </div>
+  <teleport to="body">
+    <pop></pop>
+  </teleport>
 </template>
 
 <script>
 import editorHeader from "../components/Markdown/Header.vue";
 import editorTools from "../components/Markdown/editorTools.vue";
 import mainContents from "../components/Markdown/mainContents.vue";
+import pop from '@/components/pop.vue';
 import { ref } from 'vue'
 export default {
   name: "editorPage",
-  components: { editorHeader, editorTools, mainContents },
+  components: { editorHeader, editorTools, mainContents, pop },
   setup() {
     let theme = ref('orangeheart.css');
     const tranTheme = (t) => {

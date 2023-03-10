@@ -4,7 +4,7 @@ export default defineStore('mystore', {
         return {
             editor: null,
             scrollPlace: '',
-            noEchart: ''//未经过echarts编译的内容
+            noEchart: '',//未经过echarts编译的内容
         }
     },
 })

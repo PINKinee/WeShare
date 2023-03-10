@@ -1,29 +1,41 @@
-const { defineConfig } = require('@vue/cli-service')
+const { defineConfig } = require("@vue/cli-service");
 module.exports = defineConfig({
   lintOnSave: false,
   transpileDependencies: true,
+  // 配置：可在less中使用JavaScript
+  // css: {
+  //   loaderOptions: {
+  //     less: {
+  //       lessOptions: {
+  //         javascriptEnabled: true,
+  //       },
+  //     },
+  //   },
+  // },
   configureWebpack: {
     resolve: { extensions: [".ts", ".tsx", ".js", ".json"] },
     devServer: {
       proxy: {
-        '/api': {
-          target: 'http://175.178.7.180:8088',
+        "/api": {
+          target: "http://106.52.74.37:8088",
           changeOrigin: true,
           pathRewrite: {
-            '^/api': ''
-          }
-        }
-      }
+            "^/api": "",
+          },
+        },
+      },
     },
     module: {
-      rules: [{
-        test: /\.tsx?$/,
-        loader: 'ts-loader',
-        exclude: /node_modules/,
-        options: {
-          appendTsSuffixTo: [/\.vue$/],
-        }
-      }]
-    }
-  }
-})
+      rules: [
+        {
+          test: /\.tsx?$/,
+          loader: "ts-loader",
+          exclude: /node_modules/,
+          options: {
+            appendTsSuffixTo: [/\.vue$/],
+          },
+        },
+      ],
+    },
+  },
+});

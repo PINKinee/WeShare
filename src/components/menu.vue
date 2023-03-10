@@ -1,13 +1,13 @@
 <template>
     <ul>
-        <li v-for="(item, index) in operate" :key="index" :class="'flag'" :num="index">
+        <li v-for="(item, index) in operate" :key="index" :class="'flag'" :num="index" @mousedown="preventMenu($event)">
             {{ item.name }}
         </li>
     </ul>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 export default {
     name: 'menuList',
     props: {
@@ -15,8 +15,14 @@ export default {
     },
     setup(props) {
         const operate = ref(props.operate);
+        const preventMenu = e => {
+            e.target.oncontextmenu = e => e.preventDefault();
+        }
+        // 记得在这里添加watchEffect
+        watchEffect(() => operate.value = props.operate);
         return {
-            operate
+            operate,
+            preventMenu
         }
     }
 }

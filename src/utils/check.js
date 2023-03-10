@@ -4,4 +4,20 @@ export const checkEmail = email => {
 }
 export const judgePsw = (a, b) => a === b;
 
-export const checkNull = str => str !== '';
+export const dataHandler = (arr1, arr2) => {
+    const array1 = arr1.filter(item => item !== null);
+    const array2 = arr2.filter(item => item !== null);
+    if (array1.length && array2.length) {
+        return [...array1, ...array2];
+    } else if (array1.length && !array2.length) {
+        return [...array1];
+    } else if (array2.length && !array1.length) {
+        return [...array2];
+    } else {
+        return [];
+    }
+}
+
+export const clearEmptyData = arr => {
+    return arr.length === 0 ? arr : arr.filter(item => item !== null);
+}

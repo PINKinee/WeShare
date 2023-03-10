@@ -5,7 +5,7 @@
     </div>
     <div class="mainEdiPlace">
       <div class="richText-left" @mouseover="mdStore().scrollPlace = 'edi'" @keydown="fillNum">
-        <textarea ref="l" @change="changeText"></textarea>
+        <textarea ref="l" @change="changeText" class="editorArea"></textarea>
       </div>
       <div class="richText-middle orangeheart" @mouseover="mdStore().scrollPlace = 'pre'" @scroll="usePreScroll"
         v-html="aftcontent"></div>
@@ -21,7 +21,7 @@ import CodeMirror from "codemirror";
 import syntaxDes from "./syntaxDes.vue";
 import filesManageVue from "./filesManage.vue";
 import { marked } from "marked";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, getCurrentInstance, nextTick } from "vue";
 import "highlight.js/styles/magula.css";
 import "codemirror/addon/fold/foldcode.js"; // 代码折叠
 import "codemirror/addon/fold/foldgutter.js"; // 代码折叠
@@ -59,72 +59,18 @@ import mdStore from "@/store/codemirror";
 import useEdiScroll from "@/utils/useEdiScroll";
 import usePreScroll from "@/utils/usePreScroll";
 import fillNum from "@/utils/fillNum";
-
-import * as Y from 'yjs'
-import { CodemirrorBinding } from 'y-codemirror'
-import { WebrtcProvider } from 'y-webrtc'
+import articleStore from '@/store/articleStore';
 
 export default {
   name: "richText",
   components: { syntaxDes, filesManageVue },
   props: ["theme"],
   setup() {
-    const files = [
-      {
-        id: 1,
-        name: "f1",
-        children: [
-          {
-            id: 11,
-            name: "f11",
-            children: [
-              {
-                id: 111,
-                name: "f111",
-              },
-              {
-                id: 112,
-                name: "f112",
-              },
-            ],
-          },
-          {
-            id: 12,
-            name: "f12",
-          },
-        ],
-      },
-      {
-        id: 2,
-        name: "f2",
-        children: [
-          {
-            id: 21,
-            name: "f21",
-            children: [
-              {
-                id: 211,
-                name: "f211",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: 3,
-        name: "f3",
-        children: [
-          {
-            id: 31,
-            name: "f31",
-          },
-          {
-            id: 32,
-            name: "f32",
-          },
-        ],
-      },
-    ];
+    const aStore = articleStore();
+    let files = ref([]);
+    nextTick(() => {
+      files.value = aStore.fileTree;
+    })
     // markdown基本设置
     marked.setOptions({
       renderer: new marked.Renderer(),
@@ -147,17 +93,6 @@ export default {
     const l = ref(null);
     // codemirror配置
     onMounted(() => {
-      // 引入y-webrtc
-      const ydoc = new Y.Doc();
-      const provider = new WebrtcProvider('weShareMd', ydoc,
-        {
-          signaling: ['ws:localhost:4444'],
-          filterBcConns: true
-        }
-      );
-      const yText = ydoc.getText('codemirror');
-      const yUndoManager = new Y.UndoManager(yText);
-
       const editor = CodeMirror.fromTextArea(l.value, {
         mode: "markdown",
         theme: "base16-light",
@@ -173,20 +108,8 @@ export default {
         spellcheck: true,
         allowDropFileTypes: ["text/html", "text/x-markdown", "text/plain"],
       });
-      // 绑定codeMirror
-      const binding = new CodemirrorBinding(yText, editor, provider.awareness, {
-        // 使用这个自带的撤销重做方法
-        yUndoManager
-      });
-      // 修改用户名为指定名称
-      binding.awareness.setLocalStateField('user',
-        // 暂时先这么写，等有了接口再改为用户名变量
-        { color: '#008833', name: 'PINKinee' }
-      )
-
       // 当编辑器改变时
       editor.on("change", () => {
-        console.log(editor.getValue());
         new Promise((resolve) => {
           aftcontent.value = md.render(editor.getValue());
           resolve();

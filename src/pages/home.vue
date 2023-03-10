@@ -13,7 +13,7 @@
 <script>
 import homeHeader from '../components/Home/header.vue'
 import center from '../components/Home/center.vue'
-import btn from '../components/Home/button.vue'
+import btn from '../components/button.vue'
 import { useRouter } from 'vue-router';
 export default {
     name: 'home',
@@ -24,7 +24,14 @@ export default {
     },
     setup() {
         const router = useRouter();
-        const jump = () => router.push('/personal');
+        // const jump = () => router.push('/personal');
+        const jump = () => {
+            if (localStorage.getItem('userStore')) {
+                router.push('/personal');
+            } else {
+                router.push('/login');
+            }
+        }
         return {
             jump
         }
@@ -40,12 +47,13 @@ export default {
     justify-content: center;
     overflow: hidden;
     width: 100vw;
-    min-width: 1100px;
+    min-width: 1260px;
     height: 100vh;
 
     .homeArea {
         width: 80%;
         height: 100%;
+        overflow: visible;
 
         .footer {
             display: flex;

@@ -1,50 +1,51 @@
 <template>
   <div class="tool">
-    <span @click="addBIDC('**')" class="iconfont icon-zitijiacu" title="加粗"></span>
-    <span @click="addBIDC('*')" class="iconfont icon-italic" title="斜体"></span>
+    <span @click="allowFlag && addBIDC('**')" class="iconfont icon-zitijiacu" title="加粗"></span>
+    <span @click="allowFlag && addBIDC('*')" class="iconfont icon-italic" title="斜体"></span>
     <span class="iconfont icon-biaotizhengwenqiehuan" title="标题">
       <ul>
-        <li v-for="(h, index) of hs" :key="index" @click="tools.addH(index)">
+        <li v-for="(h, index) of hs" :key="index" @click="allowFlag && tools.addH(index)">
           {{ h }}
         </li>
       </ul>
     </span>
-    <span @click="tools.addBIDC('~~')" class="iconfont icon-shanchuxian" title="删除线"></span>
-    <span @click="tools.addOl" class="iconfont icon-wuxuliebiao" title="无序列表"></span>
-    <span @click="tools.addUl" class="iconfont icon-youxuliebiao" title="有序列表"></span>
-    <span @click="tools.addDaiban" class="iconfont icon-daiban" title="待办列表"></span>
-    <span @click="tools.addQuote" class="iconfont icon-quote" title="引用"></span>
+    <span @click="allowFlag && tools.addBIDC('~~')" class="iconfont icon-shanchuxian" title="删除线"></span>
+    <span @click="allowFlag && tools.addOl" class="iconfont icon-wuxuliebiao" title="无序列表"></span>
+    <span @click="allowFlag && tools.addUl" class="iconfont icon-youxuliebiao" title="有序列表"></span>
+    <span @click="allowFlag && tools.addDaiban" class="iconfont icon-daiban" title="待办列表"></span>
+    <span @click="allowFlag && tools.addQuote" class="iconfont icon-quote" title="引用"></span>
     <span class="iconfont icon-daimakuai" title="代码块">
       <ul>
-        <li @click="tools.addBIDC('`')">行内块</li>
-        <li @click="tools.addCode">代码块</li>
+        <li @click="allowFlag && tools.addBIDC('`')">行内块</li>
+        <li @click="allowFlag && tools.addCode">代码块</li>
       </ul>
     </span>
-    <span class="iconfont icon-icon" title="图片"><input @input="tools.addImage($event)" type="file"
-        accept="image/*" /></span>
-    <span @click="tools.addTable" class="iconfont icon-biaoge" title="表格"></span>
-    <span @click="tools.addA" class="iconfont icon-lianjie" title="超链接"></span>
-    <span @click="addImport" @change="tools.importFlie($event)" class="iconfont icon-daoru" title="导入"><input
-        type="file" accept="text/*" /></span>
+    <span class="iconfont icon-icon special" title="图片">
+      <input @input="allowFlag && tools.addImage($event)" type="file" accept="image/*" />
+    </span>
+    <span @click="allowFlag && tools.addTable" class="iconfont icon-biaoge" title="表格"></span>
+    <span @click="allowFlag && tools.addA" class="iconfont icon-lianjie" title="超链接"></span>
+    <span @click="allowFlag && addImport" @change="allowFlag && tools.importFlie($event)" class="iconfont icon-daoru"
+      title="导入"><input type="file" accept="text/*" /></span>
     <span class="iconfont icon-daochu" title="导出">
       <ul>
-        <li @click="downloadPdf">pdf</li>
-        <li @click="downloadFile('md')">md</li>
-        <li @click="downloadFile('html')">html</li>
+        <li @click="allowFlag && downloadPdf">pdf</li>
+        <li @click="allowFlag && downloadFile('md')">md</li>
+        <li @click="allowFlag && downloadFile('html')">html</li>
       </ul>
     </span>
-    <span @click="tools.addUndo" class="iconfont icon-chexiao" title="撤销"></span>
-    <span @click="tools.addRedo" class="iconfont icon-zhongzuo" title="重做"></span>
-    <span @click="tools.choiceModle" class="iconfont icon-mobansheji" title="主题">
+    <span @click="allowFlag && tools.addUndo" class="iconfont icon-chexiao" title="撤销"></span>
+    <span @click="allowFlag && tools.addRedo" class="iconfont icon-zhongzuo" title="重做"></span>
+    <span @click="allowFlag && tools.choiceModle" class="iconfont icon-mobansheji" title="主题">
       <ul>
-        <li @click="tools.changeTheme(t.name)" v-for="(t, index) of theme" :key="index">
+        <li @click="allowFlag && tools.changeTheme(t.name)" v-for="(t, index) of theme" :key="index">
           {{ t.name }}
         </li>
       </ul>
     </span>
-    <span @click="tools.addMeum" class="iconfont icon-mulu1" title="目录"></span>
+    <span @click="allowFlag && tools.addMeum" class="iconfont icon-mulu1" title="目录"></span>
     <span class="iconfont icon-qiehuan" title="使用富文本编辑器"></span>
-    <span class="iconfont icon-shuoming" @click="openR" title="语法说明"></span>
+    <span class="iconfont icon-shuoming" @click="allowFlag && openR" title="语法说明"></span>
   </div>
   <div :class="isTip ? 'tip' : 'tip notip'">
     正在导出请稍等……<span class="iconfont icon-chahao" @click="isTip = false"></span>
@@ -56,10 +57,14 @@ import mdStore from "@/store/codemirror";
 import domToPfd from "@/utils/domToPfd";
 import createFile from "@/utils/createFile";
 import * as tools from '@/utils/tool';
+import artStore from '@/store/articleStore';
 import { ref } from "vue";
+import { storeToRefs } from 'pinia';
 export default {
   name: "editorTools",
   setup() {
+    const aStore = artStore();
+    let { allowFlag } = storeToRefs(aStore);
     const isTip = ref(false);
     const hs = [
       "一级标题",
@@ -91,11 +96,12 @@ export default {
       fileType,
       mdStore,
       tools,
+      isTip,
+      allowFlag,
       domToPfd,
       createFile,
       downloadPdf,
       downloadFile,
-      isTip,
     };
   },
 };
@@ -195,5 +201,9 @@ export default {
 
 .notip {
   top: -40px;
+}
+
+.eventNone {
+  pointer-events: none;
 }
 </style>
